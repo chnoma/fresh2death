@@ -62,4 +62,5 @@ export async function handler(req: Request, _ctx: HandlerContext) {
       }
     });
   }
+  return new Response();
 }
