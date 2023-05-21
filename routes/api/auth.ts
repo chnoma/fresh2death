@@ -14,7 +14,6 @@ const requiredFields = new Set(["username", "password"]);
 export async function handler(req: Request, _ctx: HandlerContext) {
   const db = await pool.connect();
   const url = new URL(req.url);
-<<<<<<< Updated upstream
   const cookies = parseCookieHeader(req.headers.get("Cookie"));
   if (cookies.has("token")) {
     return new Response(
@@ -64,11 +63,3 @@ export async function handler(req: Request, _ctx: HandlerContext) {
     });
   }
 }
-=======
-  if(!url.searchParams.has('username') || !url.searchParams.has('password'))
-    return new Response('Missing username or password', { status: 400 });
-  if(users.has(url.searchParams.get('username')!) && users.get(url.searchParams.get('username')!) === url.searchParams.get('password'))
-    return new Response('Logged in!');
-  return new Response('Invalid username or password', { status: 401 });
-}
->>>>>>> Stashed changes
