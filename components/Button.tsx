@@ -9,5 +9,4 @@ export function Button(props: JSX.HTMLAttributes<HTMLButtonElement>) {
       class="px-2 py-1 border(gray-100 2) hover:bg-gray-200"
     />
   );
-  
 }
