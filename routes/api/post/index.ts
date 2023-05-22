@@ -30,7 +30,7 @@ export async function handler(req: Request, ctx: HandlerContext) {
   if(!cookies.has('token')) return new Response(`{"error": "no authenication token"}`, {status: 401});
   const token = cookies.get('token');
 
-  const body = (await req.clone().formData()).get("body");
+  const body = (await req.clone().formData()).get("body"); // TODO(ybabts): Shouldn't we separate the form and json requests out? Seems a bit odd to me
   const title = (await req.formData()).get("title");
 
   if (title === null || body === null) {
