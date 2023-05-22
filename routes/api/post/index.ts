@@ -15,12 +15,14 @@ export async function handler(req: Request, ctx: HandlerContext) {
     const db = await pool.connect();
     const postLength = url.searchParams.has("postLength") ? parseInt(url.searchParams.get("postLength")!) : 50;
     const limit = url.searchParams.has("postLength") ? parseInt(url.searchParams.get("postLength")!) : 10;
-    const result = await db.queryArray(`select post.title, substring(post.body, 1, $1), users.display_name from post, users where post.user_id =users.id ORDER BY post.id DESC LIMIT $2`, [postLength, limit]).finally(() => db.release());
+    const result = await db.queryArray(`select post.title, substring(post.body, 1, $1), users.display_name, users.id from post, users where post.user_id =users.id ORDER BY post.id DESC LIMIT $2`, [postLength, limit]).finally(() => db.release());
+    console.log(result);
     return new Response(JSON.stringify(result.rows.map(v => {
       return {
         title: v[0],
         body: v[1],
-        display_name: v[2]
+        display_name: v[2],
+        user_id: v[3]
       }
     })));
   }
