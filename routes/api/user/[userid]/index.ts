@@ -11,6 +11,10 @@ const pool = new Postgres.Pool(dbUrl, 3, true);
 
 export async function handler(_req: Request, ctx: HandlerContext) {
   const db = await pool.connect();
-  const result = await db.queryObject(`SELECT id, username, display_name FROM users WHERE id=${ctx.params.userid}`).finally(() => db.release());
-  return new Response(JSON.stringify(result.rows[0]));
+  const result = await db.queryArray(`SELECT id, username, display_name FROM users WHERE id=$1`, [ctx.params.userid]).finally(() => db.release());
+  return new Response(JSON.stringify({
+    id: result.rows[0][0],
+    username: result.rows[0][1],
+    display_name: result.rows[0][2]
+  }));
 }

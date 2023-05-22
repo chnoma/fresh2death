@@ -11,7 +11,7 @@ const pool = new Postgres.Pool(dbUrl, 3, true);
 
 export async function handler(req: Request, ctx: HandlerContext) {
   const db = await pool.connect();
-  const result = await db.queryObject(`SELECT * FROM post WHERE id=${ctx.params.postid}`).finally(() => db.release());
+  const result = await db.queryArray(`SELECT * FROM post WHERE id=$1`, [ctx.params.postid]).finally(() => db.release());
   if(result.rows.length === 0) return new Response(`{"error": "post not found"}`, {status: 404});
   return new Response(JSON.stringify(result.rows[0]));
 }
