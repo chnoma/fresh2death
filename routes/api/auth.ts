@@ -1,5 +1,5 @@
 import { HandlerContext } from "$fresh/server.ts";
-import { parseCookieHeader, toCookieHeader } from "../../src/Cookies.ts";
+import { parseCookieHeader } from "../../src/Cookies.ts";
 import { Postgres } from "../../deps.ts";
 
 if (!Deno.env.has("POSTGRES_ENDPOINT")) {
