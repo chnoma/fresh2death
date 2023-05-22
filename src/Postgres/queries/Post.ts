@@ -31,7 +31,7 @@ export async function writePost(title: string, body: string, userid: number): Pr
   }
 }
 
-export async function getRecentPosts(id: number, count = 10): Promise<(Post.Schema & { username: string })[] | Error> {
+export async function getRecentPosts(count = 10): Promise<(Post.Schema & { display_name: string })[] | Error> {
   try {
     const fields = Post.Fields;
     const conn = await Pool.connect();
@@ -44,7 +44,7 @@ export async function getRecentPosts(id: number, count = 10): Promise<(Post.Sche
         title: row[1] as string,
         body: row[2] as string,
         user_id: row[3] as number,
-        username: row[4] as string
+        display_name: row[4] as string
       });
     return posts;
   } catch(error) {

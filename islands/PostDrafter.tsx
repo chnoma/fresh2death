@@ -18,7 +18,7 @@ export default function PostDrafter() {
             <div>
                 <button class="w-full bg-gray-900 hover:bg-pink-600 text-white efont-bold py-2 px-4 mb-6 rounded" type="submit"
                 onClick={async () => {
-                    const response = await fetch(location.protocol+"/api/post/new",
+                    const response = await fetch(location.protocol+"/api/posts/new",
                         {
                             method: "POST",
                             cache: "no-cache",
@@ -26,9 +26,10 @@ export default function PostDrafter() {
                             headers: {
                                 "Content-Type": "application/json"
                             },
-                            body: JSON.stringify({"title":  title_input.current!.value,
-                                                  "body":   body_input.current!.value})
+                            body: JSON.stringify({"title":  (title_input.current! as {value: unknown}).value,
+                                                  "body":   (body_input.current! as {value: unknown}).value})
                         });
+                        console.log(await response.json());
                 }}>Post</button>
             </div>
         </div>
