@@ -14,5 +14,11 @@ export async function handler(req: Request, ctx: HandlerContext) {
   const url = new URL(req.url);
   const postLength = url.searchParams.has("postLength") ? parseInt(url.searchParams.get("postLength")!) : 50;
   const result = await db.queryArray(`SELECT id, title, SUBSTRING(body, 1, $1) as body, author FROM post WHERE author=$2`, [postLength, ctx.params.userid]).finally(() => db.release());
-  return new Response(JSON.stringify(result.rows));
+  return new Response(JSON.stringify(result.rows.map(v => {
+    return {
+      id: v[0],
+      title: v[1],
+      body: v[2]
+    }
+  })));
 }
