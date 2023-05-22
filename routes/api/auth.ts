@@ -52,7 +52,7 @@ export async function handler(req: Request, _ctx: HandlerContext) {
       displayname: string;
     }[])[0];
     cookies.set("token", user.id.toString());
-    
+
     return Response.redirect(url.protocol + "//" + url.host + "");
   }
   return new Response();

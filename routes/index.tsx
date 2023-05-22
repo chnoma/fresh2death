@@ -9,10 +9,9 @@ type PostType = {
   body: string;
   display_name: string;
   user_id: number;
-}
+};
 
 export default function Home({ data }: PageProps<PostType[]>) {
-  
   return (
     <>
       <Head>
@@ -20,12 +19,18 @@ export default function Home({ data }: PageProps<PostType[]>) {
       </Head>
       <body class="flex bg-gray-600">
         <div class="flex w-full flex-col overflow-auto">
-          {data.map(post => {
-            return <Post author={post.display_name.toString()} title={post.title} body={post.body+'...'}
-                    user_id={post.user_id} />
+          {data.map((post) => {
+            return (
+              <Post
+                author={post.display_name.toString()}
+                title={post.title}
+                body={post.body + "..."}
+                user_id={post.user_id}
+              />
+            );
           })}
         </div>
-        <PostDrafter/>
+        <PostDrafter />
       </body>
     </>
   );
@@ -33,6 +38,8 @@ export default function Home({ data }: PageProps<PostType[]>) {
 
 export async function handler(req: Request, ctx: HandlerContext) {
   const url = new URL(req.url);
-  const posts = await fetch(url.protocol + "//" + url.host + "/api/posts").then(res => res.json());
+  const posts = await fetch(url.protocol + "//" + url.host + "/api/posts").then(
+    (res) => res.json(),
+  );
   return ctx.render(posts);
 }

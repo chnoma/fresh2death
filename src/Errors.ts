@@ -1,4 +1,3 @@
-
 export function createFromError(error: Error): string {
   return `{
     "error": {
@@ -6,7 +5,7 @@ export function createFromError(error: Error): string {
       "message": "${error.message}",
       "stack": "${error.stack}"
     }
-  }`
+  }`;
 }
 
 export function createFromMessage(message: string): string {
@@ -14,5 +13,5 @@ export function createFromMessage(message: string): string {
     "error": {
       "message": "${message}"
     }
-  }`
+  }`;
 }

@@ -9,7 +9,7 @@ export default function Home(req: Request) {
         <title>Post</title>
       </Head>
       <body class="flex h-screen bg-gray-600">
-        <PostDrafter/>
+        <PostDrafter />
       </body>
     </>
   );
