@@ -26,7 +26,7 @@ export default function Home(req: Request) {
                       name="password" />
             </div>
             <div>
-              <input class="w-full bg-gray-900 hover:bg-pink-600 text-white efont-bold py-2 px-4 mb-6 rounded" type="submit"/>
+              <input class="w-full bg-gray-900 hover:bg-pink-600 text-white efont-bold py-2 px-4 mb-6 rounded" type="submit" value="Log in"/>
             </div>
             {url.searchParams.has('error') ? <div class="text-red-500">Invalid username or password</div> : null}
           </form>
