@@ -15,11 +15,9 @@ export async function handler(req: Request, _ctx: HandlerContext) {
   const db = await pool.connect();
   const url = new URL(req.url);
   const cookies = parseCookieHeader(req.headers.get("Cookie"));
-  if (cookies.has("token")) {
-    return new Response(
-      `{"token":"${cookies.get("token")}"}`,
-    );
-  }
+  // if (cookies.has("token")) {
+  //   return Response.redirect(url.protocol + "//" + url.host + "");
+  // }
 
   const missingFields = [];
   for (const field of requiredFields) {
@@ -41,10 +39,10 @@ export async function handler(req: Request, _ctx: HandlerContext) {
     }' AND password='${url.searchParams.get("password")}'`,
   ).finally(() => db.release());
   if (result.rows.length === 0) {
-    return new Response(`{"error": "Invalid login"}`);
+    return Response.redirect(url.protocol + "//" + url.host + "/login?error=1");
   }
   if (result.rows.length > 1) {
-    return new Response(`{"error": "Multiple users with same login"}`);
+    return Response.redirect(url.protocol + "//" + url.host + "/login?error=2");
   }
   if (result.rows.length === 1) {
     const user = (result.rows as {
@@ -54,13 +52,8 @@ export async function handler(req: Request, _ctx: HandlerContext) {
       displayname: string;
     }[])[0];
     cookies.set("token", user.id.toString());
-    return new Response(`{"token":${
-      user.id
-    }}`, {
-      headers: {
-        "Set-Cookie": toCookieHeader(cookies)
-      }
-    });
+    
+    return Response.redirect(url.protocol + "//" + url.host + "");
   }
   return new Response();
 }
