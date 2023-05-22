@@ -1,6 +1,7 @@
 import { Head } from "$fresh/runtime.ts";
 import { HandlerContext, PageProps } from "$fresh/server.ts";
 import Post from "../components/Post.tsx";
+import PostDrafter from "../components/PostDrafter.tsx";
 
 type PostType = {
   id: number;
@@ -24,6 +25,7 @@ export default function Home({ data }: PageProps<Post[]>) {
                     user_id={post.user_id} />
           })}
         </div>
+        <PostDrafter/>
       </body>
     </>
   );

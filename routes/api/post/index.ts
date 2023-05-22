@@ -29,9 +29,16 @@ export async function handler(req: Request, ctx: HandlerContext) {
   const cookies = parseCookieHeader(req.headers.get("cookie"));
   if(!cookies.has('token')) return new Response(`{"error": "no authenication token"}`, {status: 401});
   const token = cookies.get('token');
-  if(url.searchParams.has('title') === false) return new Response(`{"error": "no title"}`, {status: 400});
+
+  const body = (await req.clone().formData()).get("body");
+  const title = (await req.formData()).get("title");
+
+  if (title === null || body === null) {
+    return new Response(`{"error": "invalid post data"}`, {status: 400})
+  }
+  
   const db = await pool.connect();
-  const result = await db.queryArray(`INSERT INTO post (title, body, user_id) VALUES ($1::varchar, $2::varchar, $3)`, [String(url.searchParams.get('title')), await req.text(), token]).finally(() => db.release());
+  const result = await db.queryArray(`INSERT INTO post (title, body, user_id) VALUES ($1::varchar, $2::varchar, $3)`, [title, body, token]).finally(() => db.release());
   if(result.warnings.length > 0) return new Response(`{"error": "${result.warnings[0]}"}`, {status: 400})
   return new Response(`{"success": "post created"}`);
 }
