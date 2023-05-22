@@ -1,7 +1,7 @@
 import { Head } from "$fresh/runtime.ts";
 import { HandlerContext, PageProps } from "$fresh/server.ts";
 import Post from "../components/Post.tsx";
-import PostDrafter from "../components/PostDrafter.tsx";
+import PostDrafter from "../islands/PostDrafter.tsx";
 
 type PostType = {
   id: number;
@@ -33,6 +33,6 @@ export default function Home({ data }: PageProps<PostType[]>) {
 
 export async function handler(req: Request, ctx: HandlerContext) {
   const url = new URL(req.url);
-  const posts = await fetch(url.protocol + "//" + url.host + "/api/post").then(res => res.json());
+  const posts = await fetch(url.protocol + "//" + url.host + "/api/posts").then(res => res.json());
   return ctx.render(posts);
 }
