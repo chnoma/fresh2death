@@ -15,3 +15,18 @@ export async function getPostByID(id: number, fields: Partial<typeof Post.Fields
     return error;
   }
 }
+
+export async function writePost(title: string, body: string, userid: number): Promise<Post.Schema | Error> {
+  try {
+    const conn = await Pool.connect();
+    const result = await conn.queryArray(`INSERT INTO ${Post.TableName} (title, body, user_id) VALUES ($1, $2, $3) RETURNING *`, [title, body, userid]).finally(() => conn.release());
+    if(result.rows[0] === undefined) return new Error(`${QueryErrors.NotFound} ${writePost.name}(${[...arguments].join(', ')})`);
+    const post = new Map;
+    for(let i = 0; i < result.rows[0].length; i++) {
+      post.set(Post.Fields[i], result.rows[0][i]);
+    }
+    return Object.fromEntries(post.entries()) as Post.Schema;
+  } catch(error) {
+    return error;
+  }
+}

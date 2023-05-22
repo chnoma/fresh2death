@@ -1,2 +1,2 @@
 export * as Post from './Post.ts';
-export * from './User.ts'
+export * as User from './User.ts'
