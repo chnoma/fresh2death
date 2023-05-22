@@ -15,13 +15,12 @@ export async function handler(req: Request, ctx: HandlerContext) {
     const db = await pool.connect();
     const postLength = url.searchParams.has("postLength") ? parseInt(url.searchParams.get("postLength")!) : 50;
     const limit = url.searchParams.has("postLength") ? parseInt(url.searchParams.get("postLength")!) : 10;
-    const result = await db.queryArray(`SELECT id, title, SUBSTRING(body, 1, $1) as body, author FROM post ORDER BY id DESC LIMIT $2`, [postLength, limit]).finally(() => db.release());
+    const result = await db.queryArray(`select post.title, substring(post.body, 1, $1), users.display_name from post, users where post.user_id =users.id ORDER BY post.id DESC LIMIT $2`, [postLength, limit]).finally(() => db.release());
     return new Response(JSON.stringify(result.rows.map(v => {
       return {
-        id: v[0],
-        title: v[1],
-        body: v[2],
-        author: v[3]
+        title: v[0],
+        body: v[1],
+        display_name: v[2]
       }
     })));
   }
@@ -31,7 +30,7 @@ export async function handler(req: Request, ctx: HandlerContext) {
   const token = cookies.get('token');
   if(url.searchParams.has('title') === false) return new Response(`{"error": "no title"}`, {status: 400});
   const db = await pool.connect();
-  const result = await db.queryArray(`INSERT INTO post (title, body, author) VALUES ($1::varchar, $2::varchar, $3)`, [String(url.searchParams.get('title')), await req.text(), token]).finally(() => db.release());
+  const result = await db.queryArray(`INSERT INTO post (title, body, user_id) VALUES ($1::varchar, $2::varchar, $3)`, [String(url.searchParams.get('title')), await req.text(), token]).finally(() => db.release());
   if(result.warnings.length > 0) return new Response(`{"error": "${result.warnings[0]}"}`, {status: 400})
   return new Response(`{"success": "post created"}`);
 }
