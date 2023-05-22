@@ -11,7 +11,7 @@ type PostType = {
   user_id: number;
 }
 
-export default function Home({ data }: PageProps<Post[]>) {
+export default function Home({ data }: PageProps<PostType[]>) {
   
   return (
     <>

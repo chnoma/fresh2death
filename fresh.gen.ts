@@ -7,11 +7,13 @@ import * as $0 from "./routes/api/auth.ts";
 import * as $1 from "./routes/api/joke.ts";
 import * as $2 from "./routes/api/post/[postid].ts";
 import * as $3 from "./routes/api/post/index.ts";
-import * as $4 from "./routes/api/user/[userid]/index.ts";
-import * as $5 from "./routes/api/user/[userid]/posts.ts";
-import * as $6 from "./routes/index.tsx";
-import * as $7 from "./routes/login.tsx";
-import * as $8 from "./routes/post_test.tsx";
+import * as $4 from "./routes/api/posts/[postid].ts";
+import * as $5 from "./routes/api/user/[userid]/index.ts";
+import * as $6 from "./routes/api/user/[userid]/posts.ts";
+import * as $7 from "./routes/api/users/[userid]/index.ts";
+import * as $8 from "./routes/index.tsx";
+import * as $9 from "./routes/login.tsx";
+import * as $10 from "./routes/post_test.tsx";
 import * as $$0 from "./islands/Counter.tsx";
 
 const manifest = {
@@ -20,11 +22,13 @@ const manifest = {
     "./routes/api/joke.ts": $1,
     "./routes/api/post/[postid].ts": $2,
     "./routes/api/post/index.ts": $3,
-    "./routes/api/user/[userid]/index.ts": $4,
-    "./routes/api/user/[userid]/posts.ts": $5,
-    "./routes/index.tsx": $6,
-    "./routes/login.tsx": $7,
-    "./routes/post_test.tsx": $8,
+    "./routes/api/posts/[postid].ts": $4,
+    "./routes/api/user/[userid]/index.ts": $5,
+    "./routes/api/user/[userid]/posts.ts": $6,
+    "./routes/api/users/[userid]/index.ts": $7,
+    "./routes/index.tsx": $8,
+    "./routes/login.tsx": $9,
+    "./routes/post_test.tsx": $10,
   },
   islands: {
     "./islands/Counter.tsx": $$0,
