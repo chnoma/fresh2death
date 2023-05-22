@@ -70,7 +70,7 @@ export async function getRecentPosts(
     ).finally(() => conn.release());
     if (result.rows.length === 0) {
       return new Error(
-        `${QueryErrors.NotFound} ${getPostByID.name}(${
+        `${QueryErrors.NotFound} ${getRecentPosts.name}(${
           [...arguments].join(", ")
         })`,
       );
