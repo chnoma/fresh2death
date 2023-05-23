@@ -2,6 +2,7 @@ import { Head } from "$fresh/runtime.ts";
 import { HandlerContext, PageProps } from "$fresh/server.ts";
 import Post from "../components/Post.tsx";
 import PostDrafter from "../islands/PostDrafter.tsx";
+import Sidebar from "../islands/Sidebar.tsx";
 
 type PostType = {
   id: number;
@@ -12,12 +13,14 @@ type PostType = {
 };
 
 export default function Home({ data }: PageProps<PostType[]>) {
+  // TODO(chnoma): Add postdrafter only if token exists
   return (
     <>
       <Head>
         <title>Post It</title>
       </Head>
-      <body class="flex bg-gray-600">
+      <Sidebar/>
+      <body class="flex ml-64 bg-gray-600">
         <div class="flex w-full flex-col overflow-auto">
           {data.map((post) => {
             return (
@@ -30,7 +33,7 @@ export default function Home({ data }: PageProps<PostType[]>) {
             );
           })}
         </div>
-        <PostDrafter />
+        {/* <PostDrafter /> */} 
       </body>
     </>
   );
